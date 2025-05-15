@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Mahsulotlar Ro'yxati</h3>
+            <a href="{% url 'product_create' %}" class="btn btn-outline-dark fw-bold">
+                ➕ Yangi Mahsulot Qo'shish
+            </a>
+        </div>
+
+        <div class="card-body">
+            {% if products %}
+                <div class="row">
+                    {% for product in products %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm border-0 rounded-2 position-relative">
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" class="card-img-top rounded-top" alt="{{ product.name }}">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/330" class="card-img-top rounded-top" alt="No Image">
+                                {% endif %}
+                                
+                                <!-- Uch nuqta menyu -->
+                                <div class="dropdown position-absolute top-0 end-0 m-2">
+                                    <button class="btn btn-sm btn-light p-1 bg-white border-0 dropdown-toggle" type="button" id="dropdownMenuButton{{ product.pk }}" data-bs-toggle="dropdown" aria-expanded="false" style="background: transparent;">
+                                        &#8226;&#8226;&#8226;
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ product.pk }}">
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="{% url 'product_delete' product.pk %}">
+                                                ❌ O'chirish
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-warning" href="{% url 'product_edit' product.pk %}">
+                                                ✏️ Tahrirlash
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.name }}</h5>
+                                    <p class="card-text"><strong>Narx:</strong> {{ product.price }} so'm</p>
+                                    <p class="card-text"><strong>Ombordagi soni:</strong> {{ product.stock }}</p>
+                                    <p class="card-text"><strong>Kategoriya:</strong> {{ product.category }}</p>
+                                    <p class="card-text"><strong>Tavsif:</strong> {{ product.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center text-muted mt-4">Hech qanday mahsulot mavjud emas. Yangi mahsulotlar qo'shishni boshlang!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

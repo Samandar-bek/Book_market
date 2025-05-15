@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-lg">
+        <div class="card-header text-white text-center py-3">
+            <h3 class="mb-0">Hodimga to'lov qilish</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{% url 'staff' %}" class="p-4">
+                {% csrf_token %}
+                
+                <!-- Hodim tanlash -->
+                {{form}}
+                <br>
+                <!-- Tugmalar -->
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success w-48 rounded-3 px-4 py-2 shadow-sm hover-shadow-lg transition-all">
+                        Saqlash
+                    </button>
+                    <a href="{% url 'staff' %}" class="btn btn-danger w-48 rounded-3 px-4 py-2 shadow-sm hover-shadow-lg transition-all">
+                        Bekor qilish
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

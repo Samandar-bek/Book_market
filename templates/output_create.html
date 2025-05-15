@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header">
+            <h3 class="mb-0">Chiqim Qo'shish</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-primary mt-3">Saqlash</button>
+                <a href="{% url 'output' %}" class="btn btn-outline-secondary mt-3 ms-2">Ortga</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

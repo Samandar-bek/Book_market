@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Kitoblar Ro'yxati</h3>
+            <a href="{% url 'book_model_create' %}" class="btn btn-outline-dark fw-bold">
+                ➕ Yangi Kitob Qo'shish
+            </a>
+        </div>
+
+        <div class="card-body">
+            {% if books %}
+                <div class="row">
+                    {% for book in books %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm border-0 rounded-2">
+                                <div class="card-body">
+                                    <div class="position-relative">
+                                        <img src="{{ book.image.url }}" alt="{{ book.title }}" width="380" style="border-radius:7px">
+                                        <!-- Uch nuqta menyu -->
+                                        <div class="dropdown position-absolute top-0 end-0 m-2">
+                                            <button class="btn btn-sm btn-light p-1 bg-white border-0 dropdown-toggle" type="button" id="dropdownMenuButton{{ book.pk }}" data-bs-toggle="dropdown" aria-expanded="false" style="background: transparent;">
+                                                &#8226;&#8226;&#8226;
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ book.pk }}">
+                                                <li>
+                                                    <a class="dropdown-item text-danger" href="{% url 'book_model_delete' book.pk %}">
+                                                        ❌ O'chirish
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item text-warning" href="{% url 'book_model_edit' book.pk %}">
+                                                        ✏️ Tahrirlash
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <p></p> 
+                                    <h4 class="card-title" style="color:rgb(32, 213, 226);">{{ book.name }}</h4>
+                                    <p class="card-text"><strong>Kitob turi:</strong> {{ book.category }}</p>
+                                    <p class="card-text"><strong>Qiymati:</strong> {{ book.price }} so'm</p>
+                                    <p class="card-text"><strong>Son:</strong> {{ book.quantity }}</p>
+                                    <p class="card-text"><strong>Tavsif:</strong> {{ book.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center text-muted mt-4">Hech qanday kitob mavjud emas. Yangi kitoblar qo'shishni boshlang!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

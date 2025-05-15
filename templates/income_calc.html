@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <!-- Header -->
+    <div class="text-start mb-4">
+        <h1 class="fw-bold display-4">Daromad va Sof Foyda</h1>
+    </div>
+
+    <!-- Orqaga qaytish tugmasi -->
+    <div class="mb-4">
+        <a href="{% url 'income_calc' %}" class="btn btn-outline-secondary ">← Orqaga</a>
+    </div>
+
+    <!-- Form -->
+    <div class="card shadow border-0 mb-5">
+        <div class="card-body">
+            <form method="GET" action="" onsubmit="return validateDates()" class="row g-3">
+                <div class="col-md-5">
+                    <label for="start_date" class="form-label fw-semibold">Boshlanish sanasi</label>
+                    <input type="date" id="start_date" name="start_date" class="form-control form-control-lg" required>
+                </div>
+                <div class="col-md-5">
+                    <label for="end_date" class="form-label fw-semibold">Tugash sanasi</label>
+                    <input type="date" id="end_date" name="end_date" class="form-control form-control-lg" required>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-gradient w-100 py-2 fw-bold">Tasdiqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Natijalar jadvali -->
+    <div class="card shadow border-0">
+        <div class="card-body">
+            <h4 class="card-title text-start mb-4 fw-bold text-primary">Hisobot natijalari</h4>
+            <div class="table-responsive text-start">
+                <table class="table table-hover align-middle">
+                    <thead class="text-white">
+                        <tr>
+                            <th class="text-start">Tur</th>
+                            <th class="text-start">Summasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-start">Xarid</td>
+                            <td class="text-start">{{ cost_total_sum|default:"0" }} so'm</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start">Chiqim</td>
+                            <td class="text-start">{{ total_expense_sum|default:"0" }} so'm</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start">Xodim to'lovlari</td>
+                            <td class="text-start">{{ staff_payment_sum|default:"0" }} so'm</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start">Kitoblar</td>
+                            <td class="text-start">{{ sold_books_sum|default:"0" }} so'm</td>
+                        </tr>
+                        <tr class="{% if net_profit|default:0 < 0 %}bg-danger text-white{% else %}bg-success text-white{% endif %}">
+                            <td class="text-start"><strong>Sof Foyda</strong></td>
+                            <td class="text-start"><strong class="fs-4">{{ net_profit|default:"0" }} so'm</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gradient Tugma Styling -->
+<style>
+    .btn-gradient {
+        background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        border: none;
+        font-size: 1.1rem;
+        transition: background 0.3s ease;
+    }
+    .btn-gradient:hover {
+        background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+    }
+    .card {
+        border-radius: 15px;
+    }
+</style>
+
+<script>
+    function validateDates() {
+        const startDate = document.getElementById('start_date').value;
+        const endDate = document.getElementById('end_date').value;
+
+        if (new Date(startDate) > new Date(endDate)) {
+            alert('Boshlanish sanasi Tugash sanasidan oldin bo\'lishi kerak!');
+            return false;
+        }
+        return true;
+    }
+</script>
+
+{% endblock content %}

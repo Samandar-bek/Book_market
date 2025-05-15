@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="card shadow-lg rounded-4" style="width: 100%; max-width: 500px;">
+        <div class="card-header text-center text-white">
+            <h4 class="mb-0">Xodimni Tahrirlash</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="id_name" class="form-label fw-bold text-primary">Ism</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        {{ form.name }}
+                    </div>
+                    <div class="invalid-feedback">
+                        Iltimos, ismingizni kiriting.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_position" class="form-label fw-bold text-primary">Lavozimi</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
+                        {{ form.position }}
+                    </div>
+                    <div class="invalid-feedback">
+                        Iltimos, lavozimingizni tanlang.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_email" class="form-label fw-bold text-primary">Elektron pochta</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        {{ form.email }}
+                    </div>
+                    <div class="invalid-feedback">
+                        Iltimos, to'g'ri elektron pochta manzilingizni kiriting.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_phone" class="form-label fw-bold text-primary">Telefon raqami</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                        {{ form.phone }}
+                    </div>
+                    <div class="invalid-feedback">
+                        Iltimos, telefon raqamingizni kiriting.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_gender" class="form-label fw-bold text-primary">Jinsi</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-gender-male-female"></i></span>
+                        {{ form.gender }}
+                    </div>
+                    <div class="invalid-feedback">
+                        Iltimos, jinsingizni tanlang.
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success w-100 me-2 fw-semibold">Saqlash</button>
+                    <a href="{% url 'staff' %}" class="btn btn-danger w-100 ms-2 fw-semibold">Bekor qilish</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

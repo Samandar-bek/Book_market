@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 border-0">
+        <div class="card-header text-blue py-3 d-flex align-items-center justify-content-between" style="background-color: #f8f9fa;">
+            <h3 class="mb-0 fw-bold">Ma'lumotnoma</h3>
+            <a href="{% url 'reference_create' %}" class="btn btn-light rounded-pill shadow-sm">
+                ➕ Qo'shish
+            </a>
+        </div>
+
+        <div class="card-body bg-light">
+            {% if reference_values %}
+            <div class="accordion" id="accordionExample">
+                {% for key, value in reference_values.items %}
+                <div class="accordion-item border-0 mb-3">
+                    <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                        <button class="accordion-button bg-white shadow-sm rounded-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                            <span class="fw-semibold" style="color: #2a27e4;">{{ key }}</span>
+                        </button>
+                    </h2>
+                    <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body bg-white rounded-3 shadow-sm p-4">
+                            {% for item in value %}
+                            <div class="d-flex justify-content-between align-items-center bg-light border rounded-3 p-3 mb-3 shadow-sm">
+                                <span class="fw-normal">{{ item.value }}</span>
+                                <a href="{% url 'reference_delete' item.id %}" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                                    ❌ O'chirish
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <p class="text-muted fs-5">Hech qanday ma'lumot mavjud emas. Qo'shishni boshlang!</p>
+                <a href="{% url 'reference_create' %}" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                    Ma'lumot qo'shish
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-header {
+        background-color: #f0f8ff;
+    }
+    .accordion-button {
+        background-color: #e9ecef !important;
+        border-color: #ddd;
+        transition: background-color 0.3s ease;
+    }
+    .accordion-button:hover {
+        background-color: #d1e7fd !important;
+    }
+    .accordion-body {
+        background-color: #ffffff;
+        border-radius: 10px;
+    }
+    .btn-outline-danger {
+        color: #f44336;
+        border-color: #f44336;
+        transition: all 0.3s ease;
+    }
+    .btn-outline-danger:hover {
+        background-color: #f44336;
+        color: #ffffff;
+    }
+    .btn-outline-primary {
+        color: #007bff;
+        border-color: #007bff;
+        transition: all 0.3s ease;
+    }
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #ffffff;
+    }
+    .shadow-sm {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-lg">
+        <div class="card-header bx-smile text-white text-center">
+            <h3 class="text-center mb-4">Hodim Ish Haqi Hisobi</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-group mb-3">
+                    <label for="staff" class="form-label">Hodimni tanlang</label>
+                    <select id="staff" name="staff" class="form-control" required>
+                        {% for staff in staff_list %}
+                            <option value="{{ staff.id }}">{{ staff.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="time_work" class="form-label">Ishlash vaqti(soat)</label>
+                    <input type="number" id="time_work" name="time_work" class="form-control" min="1" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="price" class="form-label">To'lov summasi (so'm)</label>
+                    <input type="number" id="price" name="price" class="form-control" step="0.01" required>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success w-48 rounded-3 px-4 py-2 shadow-sm">Saqlash</button>
+                    <a href="{% url 'staff' %}" class="btn btn-danger w-48 rounded-3 px-4 py-2 shadow-sm">Bekor qilish</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

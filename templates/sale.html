@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">🛒 Sotuvlar Ro'yxati</h3>
+            <a href="{% url 'sale_create' %}" style="background-color:rgb(235, 252, 252)" class="btn btn-light fw-bold">
+                ➕ Yangi Sotuv Qo'shish
+            </a>
+        </div>
+
+        <div class="card-body">
+            {% if sales %}
+                <div class="table-responsive">
+                    <table class="table text-center">
+                        <thead>
+                            <tr>
+                                <th>↬</th>
+                                <th>📦 Mahsulot</th>
+                                <th>🔢 Miqdor</th>
+                                <th>💰 Umumiy Narx</th>
+                                <th>📅 Sotilgan Sana</th>
+                                <th>⚙️ Harakatlar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sale in sales %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><strong>{{ sale.product.name }}</strong></td>
+                                    <td>{{ sale.quantity }}</td>
+                                    <td><span class="text-success">{{ sale.total_price }} so'm</span></td>
+                                    <td>{{ sale.sale_date|date:"Y-m-d H:i" }}</td>
+                                    <td>
+                                        <a href="{% url 'sale_edit' sale.pk %}" class="btn btn-sm btn-outline-primary">
+                                            ✏️ Tahrirlash
+                                        </a>
+                                        <a href="{% url 'sale_delete' sale.pk %}" class="btn btn-sm btn-outline-danger">
+                                            ❌ O'chirish
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center mt-4">
+                    <i class="bi bi-emoji-frown" style="font-size: 3rem; color: gray;"></i>
+                    <p class="text-muted">Hech qanday sotuv mavjud emas. Yangi sotuvlar qo'shishni boshlang!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
